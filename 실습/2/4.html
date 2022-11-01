@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+      .decoration{
+        text-decoration: line-through
+      }
+    </style>
+</head>
+<body>
+  <div id='app'>
+    <h2><b>Todo List</b></h2>
+  </div>
+
+  <div>
+    <input type="text" v-model="word">
+    <button @click = "plusTodoList"> + </button>
+  </div>
+
+    <ul>
+      <li v-for="(todo,idx) in todoList" :key "idx" :class="{decoration: todo.isChecked}">
+        <input type="checkbox" v-model = "todo.isChecked">
+        {{ idx }} : {{ todo.text }}
+      </li>
+    </ul>
+    <button> 완료 목록 삭제 </button>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+
+    const app = new Vue ({
+      el : '#app',
+      data : {
+        word : '',
+        TodoList : [],
+      },
+      methods:{
+        plusTodoList(){
+          if(this.word.length === 0 ){
+            alert('내용을 입력해주세요.')
+          
+        } else {
+            this.TodoList.push({text:this.word, isChecked: false})
+          }
+
+          localStorage.setItem('todoList',this.TodoList)
+       
+        },
+        deleteComplete() {
+          this.TodoList = this.TodoList.filter((todo) => todo.isChecked == false)
+        }
+      }
+    })
+
+
+
+  </script>
+
+</body>
+</html>
